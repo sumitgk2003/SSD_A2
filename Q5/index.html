@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Data Dictionary & Table Relations</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Add Mermaid.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</head>
+<body>
+  <h1>Data Dictionary & Table-Table Relation Diagram</h1>
+
+  <section id="controls">
+    <label>
+      Load schema (JSON or XML):
+      <input type="file" id="schemaFile" accept=".json,.xml,text/*" />
+    </label>
+    <button id="useSample">Use sample schema</button>
+    <label>
+      Or paste JSON / XML here:
+      <textarea id="schemaText" placeholder='Paste JSON or XML schema here' rows="8"></textarea>
+    </label>
+
+    <div class="row">
+      <button id="renderBtn">Render Diagram</button>
+      <button id="downloadHtml">Download HTML export</button>
+      <button id="printPdf">Print / Save as PDF</button>
+    </div>
+
+    <details>
+      <summary>How to prepare schema input (click to expand)</summary>
+      <div class="instructions">
+        <div id="instructions" style="background:#f8f8ff; border:1px solid #ccc; padding:16px; margin-bottom:18px;">
+    <h2>How to Convert SQL, Postgres, and SQLite Schemas to JSON</h2>
+    <ol>
+      <li><b>Required JSON format:</b><br>
+        <pre>{
+  "tables": [
+    {
+      "name": "TableName",
+      "columns": [
+        {"name": "column_name", "type": "TYPE", "primaryKey": true/false, "unique": true/false}
+      ]
+    }
+  ],
+  "relationships": [
+    {"fromTable": "TableA", "fromColumn": "colA", "toTable": "TableB", "toColumn": "colB", "type": "many-to-one|one-to-one|many-to-many"}
+  ]
+}</pre>
+      </li>
+      <li><b>How to convert your SQL schema:</b><br>
+        For each <code>CREATE TABLE</code> statement, list the table name and columns.<br>
+        For each column, specify its name, type, and if it is <code>PRIMARY KEY</code> or <code>UNIQUE</code>.<br>
+        For foreign keys, add an entry in <code>relationships</code> with the source and target tables/columns.
+        <br><b>Example (SQL):</b>
+        <pre>CREATE TABLE users (
+  user_id INT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(150) UNIQUE
+);</pre>
+        <b>JSON:</b>
+        <pre>{
+  "tables": [
+    {
+      "name": "users",
+      "columns": [
+        {"name": "user_id", "type": "INT", "primaryKey": true},
+        {"name": "name", "type": "VARCHAR(100)"},
+        {"name": "email", "type": "VARCHAR(150)", "unique": true}
+      ]
+    }
+  ]
+}</pre>
+      </li>
+      <li><b>For Postgres and SQLite:</b><br>
+        The process is the same. Use table/column names, types, and mark primary keys and unique columns.<br>
+        For relationships, use foreign key constraints to fill the <code>relationships</code> array.
+        <br><b>Example (Postgres):</b>
+        <pre>CREATE TABLE orders (
+  order_id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(user_id)
+);</pre>
+        <b>JSON:</b>
+        <pre>{
+  "tables": [
+    {"name": "orders", "columns": [
+      {"name": "order_id", "type": "SERIAL", "primaryKey": true},
+      {"name": "user_id", "type": "INT"}
+    ]}
+  ],
+  "relationships": [
+    {"fromTable": "orders", "fromColumn": "user_id", "toTable": "users", "toColumn": "user_id", "type": "many-to-one"}
+  ]
+}</pre>
+      </li>
+      <li><b>Tips:</b><br>
+        <ul>
+          <li>Only <code>name</code>, <code>type</code>, <code>primaryKey</code>, and <code>unique</code> are required for columns.</li>
+          <li><code>relationships</code> should describe foreign key links.</li>
+          <li>You can use any SQL type; the tool will map common types to Mermaid types.</li>
+          <li>For composite keys, set <code>primaryKey: true</code> for each key column.</li>
+        </ul>
+      </li>
+    </ol>
+    <b>Paste your JSON schema in the input box or upload a file to visualize.</b>
+  </div>
+      </div>
+    </details>
+  </section>
+
+  <main class="main">
+    <aside class="sidebar">
+      <h2>Glossary (Tables)</h2>
+      <div id="glossary"></div>
+    </aside>
+
+    <section class="canvas">
+      <h2>Relation Diagram</h2>
+      <div id="diagramWrapper">
+        <!-- Change diagramSvg from <svg> to <div> -->
+        <div id="diagramSvg" style="width:100%; min-height:400px;"></div>
+      </div>
+      <div id="legend"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Simple Data Dictionary tool — no external libs. Use browser print to save PDF.</small>
+  </footer>
+
+  
+
+  <script src="script.js"></script>
+  <script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jigsaw Puzzle Maker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Jigsaw Puzzle Maker</h2>
+  
+  <input type="file" id="imageUpload" accept="image/*">
+  <select id="difficulty">
+    <option value="5">5 pieces (5 vertical strips)</option>
+    <option value="20">20 pieces (5x4)</option>
+    <option value="40">40 pieces (8x5)</option>
+    <option value="80">80 pieces (10x8)</option>
+    <option value="100">100 pieces (10x10)</option>
+  </select>
+  <button id="startBtn">Start Puzzle</button>
+
+  <div class="container">
+    <div>
+      <h3>Reference Image</h3>
+      <img id="referenceImg" alt="Reference" />
+    </div>
+    <div>
+      <h3>Puzzle Area</h3>
+      <div id="puzzleArea"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="track.js"></script>
+</body>
+</html>

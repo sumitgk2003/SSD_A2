@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stoplight Game - Nash Equilibrium Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Stoplight Game (Nash Equilibrium)</h1>
+    <div class="desc">
+      <!-- Game description and Nash Equilibrium explanation -->
+      In the Stoplight Game, two players (You and Computer) each choose to either <b>Go</b> or <b>Stop</b> at a stoplight. If both Go, they crash (worst outcome). If both Stop, they wait (not optimal). If one Goes and the other Stops, the Goer gets ahead. The Nash Equilibrium is for one to Go and the other to Stop.<br><br>
+      <b>Payoff Table:</b>
+      <table class="payoff-table">
+        <tr><th></th><th>Computer: Go</th><th>Computer: Stop</th></tr>
+        <tr><th>You: Go</th><td>-10, -10</td><td>+1, 0</td></tr>
+        <tr><th>You: Stop</th><td>0, +1</td><td>0, 0</td></tr>
+      </table>
+    </div>
+    <div class="game-area">
+      <div class="choices">
+        <!-- Player chooses Go or Stop -->
+        <button onclick="play('Go')">Go</button>
+        <button onclick="play('Stop')">Stop</button>
+      </div>
+      <div class="result" id="result"></div>
+      <div class="payoff" id="payoff"></div>
+      <button onclick="randomPlay()" style="margin-top:20px;">Random Play (Simulate Nash)</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script src="track.js"></script>
+</body>
+</html>

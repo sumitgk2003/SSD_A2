@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+#referenceImg {
+  width: 320px;
+  height: 320px;
+  object-fit: contain;
+  border: none;
+}
+
+#puzzleArea {
+  display: grid;
+  border: 3px solid #333;
+  max-width: 1000px;
+  max-height: 1000px;
+  min-width: 400px;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.piece {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  cursor: grab;
+  box-sizing: border-box;
+}

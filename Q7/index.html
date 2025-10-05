@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bowling Alley Game</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <div id="scoreboard">
+    <h2>Bowling Scoreboard</h2>
+    <div id="frames"></div>
+    <div id="total">Total: 0</div>
+  </div>
+  <div id="controls" style="position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:20;background:rgba(0,0,0,0.5);padding:10px 20px;border-radius:8px;">
+    <label for="angle">Angle: </label>
+    <input type="range" id="angle" min="-5" max="5" value="0" step="0.05">
+    <span id="angleValue">0</span>°
+  </div>
+  <canvas id="gameCanvas"></canvas>
+  <script src="script.js"></script>
+  <script src="track.js"></script>
+</body>
+</html>
